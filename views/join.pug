@@ -1,0 +1,28 @@
+extends layout 
+
+block content
+    .container.join
+        .row
+            if message 
+                span= message
+            .col-4 
+            .col-4.jumbotron
+                
+                form(action="/users/join", method="post")  
+                    .form-group
+                        label.mr-4(for="name") name
+                        input#name.form-control(type="text" required name="name")
+                    .form-group
+                        label.mr-4(for="id") Id
+                        input#id.form-control(type="text" required name="userId")
+                    .form-group
+                        label.mr-4(for="password") Password
+                        input#password.form-control(type="password" required name="password")
+                    .form-group
+                        label.mr-4(for="rePassword") Reapeat Password
+                        input#rePassword.form-control(type="password" required name="rePassword")
+                    .form-group.d-flex.justify-content-end.mt-4
+                        button.btn.btn-primary.mr-2(type='submit') Submit
+                        button.btn.btn-info.join__loginBtn Login 
+            .col-4          
+    script(src="/javascripts/join.js")   

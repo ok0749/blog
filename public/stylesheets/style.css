@@ -1,0 +1,67 @@
+:root {
+  --a-text-color: #007bff;
+}
+
+body {
+  padding: 30px;
+}
+
+a {
+  color: var(--a-text-color);
+  text-decoration: none;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--a-text-color);
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* header */
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 3rem;
+}
+
+.header-title {
+  font-weight: 900;
+}
+
+.header-info__avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+}
+
+/* index */
+.index-post {
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+}
+
+.index-post__title {
+  font-weight: 800;
+}
+
+.index-tag {
+  margin-top: 1rem;
+}
+
+/* login */
+.login,
+.join {
+  margin-top: 5rem;
+}

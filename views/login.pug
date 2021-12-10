@@ -1,0 +1,19 @@
+extends layout 
+
+block content
+    .container.login
+        .row
+            .col-4 
+            .col-4.jumbotron
+                form(action="/users/login", method="post")  
+                    .form-group
+                        label.mr-4(for="id") Id
+                        input#id.form-control(type="text" required name="userId")
+                    .form-group
+                        label.mr-4(for="password") Password
+                        input#password.form-control(type="password" required name="password")
+                    .form-group.d-flex.justify-content-end.mt-4
+                        button.btn.btn-primary.mr-2(type='submit') Submit
+                        button.btn.btn-info.login__joinBtn Join 
+            .col-4            
+    script(src="/javascripts/login.js") 

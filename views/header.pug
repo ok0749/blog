@@ -1,0 +1,9 @@
+header.header
+    a(href="/") 
+        h1.header-title  My blog  
+    if !loggedIn
+        a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/login') Login
+    else
+        .header-info 
+            img.header-info__avatar.mr-2(src= user.avatar)
+            a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/logout') Logout
