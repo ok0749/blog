@@ -1,0 +1,21 @@
+extends layout 
+
+block head 
+    link(rel="stylesheet", href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js") 
+    script hljs.initHighlightingOnLoad();
+
+block content 
+    .container.post
+        .row 
+            .col-1
+            .col-10
+                .mb-2
+                    a(href=`/posts/edit/${post.id}`) Edit
+                h1.post-title= post.title 
+                .post-info.mb-4
+                    div.mb-2= post.createdAt.toLocaleDateString()
+                    div= post.description
+                .post-markdown !{post.sanitizedHTML}
+            .col-1
+
