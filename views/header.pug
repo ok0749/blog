@@ -5,5 +5,7 @@ header.header
         a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/login') Login
     else
         .header-info 
+            span.mr-2= user.name + '님'
             img.header-info__avatar.mr-2(src= user.avatar)
+            a.header__login.btn.btn-sm.btn-outline-secondary.mr-2(href='/posts/new') 글쓰기
             a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/logout') Logout
