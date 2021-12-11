@@ -1,0 +1,23 @@
+extends layout 
+
+block content 
+    .container.new
+        .row 
+            .col-1
+            .col-10
+                form.new-form(action=`/posts/${post.id}?_method=PUT`, method="post") 
+                    .form-group 
+                        label(for="title") Title 
+                        input#title.form-control(required type="text" name='title' value= post.title) 
+                    .form-group 
+                        label(for="description") Description 
+                        textarea#description.form-control(required name="description") #{post.description}
+                    .form-group 
+                        label(for="markdown") Markdown 
+                        textarea#markdown.form-control(required name="markdown" rows='20') #{post.markdown}
+                    .new-form__buttons.d-flex.justify-content-end
+                        a.btn.btn-secondary.mr-2(href=`/posts/${post.id}`) Cancel 
+                        button.btn.btn-primary(type='submit') Save
+            .col-1
+    script(src="/javascripts/new.js") 
+
