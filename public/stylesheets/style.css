@@ -2,6 +2,56 @@
   --a-text-color: #007bff;
 }
 
+/*  */
+/* for markdown */
+/*  */
+
+/* code block */
+pre > code {
+  font-family: "Inconsolata", monospace !important;
+  line-height: 1.5;
+  font-size: 14px;
+}
+pre {
+  background: #282c34 !important;
+  border-radius: 10px;
+}
+code {
+  font-family: "Inconsolata", monospace !important;
+  line-height: normal;
+  background: rgba(135, 131, 120, 0.15);
+  color: #eb5757;
+  border-radius: 3px;
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+}
+img {
+  border-radius: 10px;
+}
+
+/* blockquote */
+blockquote p::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  border-radius: 8px;
+  background: #c8ccd0;
+}
+blockquote {
+  color: #535a60;
+  padding: 0.8em 0.8em 0 1em;
+  position: relative;
+}
+
+/*  */
+/* for web style */
+/*  */
+
+/* global */
 body {
   padding: 30px;
 }
@@ -18,11 +68,6 @@ a:link {
 a:hover {
   color: var(--a-text-color);
   text-decoration: none;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
 }
 
 /* header */
@@ -46,10 +91,15 @@ ul {
 }
 
 /* index */
+.index-posts {
+  list-style: none;
+  padding: 0;
+}
+
 .index-post {
   border-bottom: 1px solid #eeeeee;
-  padding-bottom: 3rem;
-  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .index-post__title {
@@ -65,3 +115,28 @@ ul {
 .join {
   margin-top: 5rem;
 }
+
+/* new */
+/* .new input,
+.new textarea {
+  border: none;
+  border-bottom: 2px solid #eeeeee;
+}
+
+.new input:focus,
+.new textarea:focus {
+  outline: none;
+} */
+
+/* post */
+.post-title,
+.post-info {
+  border-bottom: 2px solid #eeeeee;
+  padding-bottom: 1rem;
+}
+
+/* .post-info,
+.post-markdown {
+  padding-left: 1rem;
+  padding-right: 1rem;
+} */
