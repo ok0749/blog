@@ -19,4 +19,7 @@ router.post("/", postController.savePost);
 // 수정된 글 저장
 router.put("/:id", postController.saveEditPost);
 
+// 글 삭제
+router.delete("/:id", postController.deletePost);
+
 module.exports = router;
