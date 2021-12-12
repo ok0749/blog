@@ -10,6 +10,7 @@ module.exports = {
       title,
       description,
       markdown,
+      author: req.session.user.id,
     });
     try {
       post = await post.save();
@@ -35,6 +36,7 @@ module.exports = {
     post.title = req.body.title;
     post.description = req.body.description;
     post.markdown = req.body.markdown;
+    post.author;
     try {
       post = await post.save();
       res.redirect(`/posts/${post.id}`);
