@@ -26,6 +26,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 postSchema.pre("validate", function (next) {
