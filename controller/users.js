@@ -31,8 +31,8 @@ module.exports = {
       user = await user.save();
       req.session.loggedIn = true;
       req.session.user = {
+        id: user.id,
         name: user.name,
-        userId: user.userId,
         avatar: user.avatar,
       };
     } catch (error) {
@@ -53,8 +53,8 @@ module.exports = {
 
     req.session.loggedIn = true;
     req.session.user = {
+      id: user.id,
       name: user.name,
-      userId: user.userId,
       avatar: user.avatar,
     };
     res.redirect("/");
