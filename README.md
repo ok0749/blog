@@ -1,6 +1,7 @@
 # blog
 
-- [ ] post 삭제 구현
+- [x] post 삭제 구현
+- [ ] 글쓴이와 로그인한 유저가 동일해야 삭제할 수 있도록 구현
 - [x] post user collection 연결 index.pug 수정
 - [ ] user에 post, comment 연결
 - [ ] tag Schema
