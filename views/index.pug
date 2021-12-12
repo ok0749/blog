@@ -11,7 +11,7 @@ block content
               p.index-post__author
                 span Dec.07.2021 
                 span 정지원
-              h2.index-post__title Aurora MySQL vs Aurora PostgreSQL 
+              h1.mb-3.index-post__title Aurora MySQL vs Aurora PostgreSQL 
               p.index-post__description MySQL의 한계를 PostgreSQL로 극복할 수 있을까?
           each post in posts 
             li.index-post 
@@ -22,8 +22,8 @@ block content
                     span= post.author.name
                   else 
                     span 익명
-                h2.index-post__title= post.title
-                p.index-post__description= post.description 
+                h1.mb-3.index-post__title= post.title
+                h6.index-post__description= post.description 
       .col-2
         ul.index-tags.text-info Tag
           li.index-tag.text-dark 우아한테크코스 (17)

@@ -7,7 +7,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const methodOveride = require("method-override");
 const config = require("./config");
-const localsMiddleware = require("./middlewares");
+const loggedInMiddleware = require("./middlewares").loggedInMiddleware;
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -40,7 +40,7 @@ app.use(
 );
 
 // middlewares
-app.use(localsMiddleware);
+app.use(loggedInMiddleware);
 
 // routes
 app.use("/", indexRouter);

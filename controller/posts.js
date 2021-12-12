@@ -22,13 +22,15 @@ module.exports = {
 
   postPage: async function (req, res) {
     const id = req.params.id;
-    const post = await Post.findById(id);
+    const post = await Post.findById(id).populate("author", "name");
     res.render("post", { post });
   },
 
   editPost: async function (req, res) {
-    const post = await Post.findById(req.params.id);
-    res.render("edit", { post });
+    const post = await Post.findById(req.params.id).populate("author");
+    if (req.session.user.id === post.author.id)
+      return res.render("edit", { post });
+    res.render("post", { post });
   },
 
   saveEditPost: async function (req, res) {
@@ -46,7 +48,11 @@ module.exports = {
   },
 
   deletePost: async function (req, res) {
-    await Post.findByIdAndDelete(req.params.id);
-    res.redirect("/");
+    const post = await Post.findById(req.params.id).populate("author");
+    if (req.session.user.id === post.author.id) {
+      await Post.findByIdAndDelete(req.params.id);
+      return res.redirect("/");
+    }
+    res.render("post", { post });
   },
 };

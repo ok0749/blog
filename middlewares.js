@@ -1,7 +1,17 @@
-const localsMiddleware = (req, res, next) => {
+// 로그인 여부 확인
+const loggedInMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.user = req.session.user;
   next();
 };
 
-module.exports = localsMiddleware;
+// 권한 확인
+const authorizationMiddleware = (req, res, next) => {
+  if (req.session.loggedIn) return next();
+  res.redirect("/");
+};
+
+module.exports = {
+  loggedInMiddleware,
+  authorizationMiddleware,
+};
