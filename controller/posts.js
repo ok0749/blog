@@ -44,4 +44,9 @@ module.exports = {
       console.error(error);
     }
   },
+
+  deletePost: async function (req, res) {
+    await Post.findByIdAndDelete(req.params.id);
+    res.redirect("/");
+  },
 };
