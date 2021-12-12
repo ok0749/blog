@@ -16,26 +16,10 @@ router.get("/:id", postController.postPage);
 router.get("/edit/:id", authorizationMiddleware, postController.editPost);
 
 // 새 글 저장
-router.post(
-  "/",
-  authorizationMiddleware,
-  (req, res, next) => {
-    req.post = new Post();
-    next();
-  },
-  postController.savePost
-);
+router.post("/", authorizationMiddleware, postController.savePost);
 
 // 수정된 글 저장
-router.put(
-  "/:id",
-  authorizationMiddleware,
-  async (req, res, next) => {
-    req.post = await Post.findById(req.params.id);
-    next();
-  },
-  postController.saveEditPost
-);
+router.put("/:id", authorizationMiddleware, postController.saveEditPost);
 
 // 글 삭제
 router.delete("/:id", authorizationMiddleware, postController.deletePost);

@@ -2,8 +2,13 @@ const Post = require("../models/posts");
 
 function savePostAndRedirect(path) {
   return async (req, res) => {
+    let post;
+    if (req.params.id !== "undefined") {
+      post = await Post.findById(req.params.id);
+    } else {
+      post = new Post();
+    }
     const { title, description, markdown } = req.body;
-    let post = req.post;
     post.title = title;
     post.description = description;
     post.markdown = markdown;
@@ -12,7 +17,8 @@ function savePostAndRedirect(path) {
       post = await post.save();
       res.redirect(`/posts/${post.id}`);
     } catch (error) {
-      res.render(`posts/${path}`, { post });
+      console.error(error);
+      res.render(`${path}`, { post });
     }
   };
 }
