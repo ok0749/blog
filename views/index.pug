@@ -18,7 +18,10 @@ block content
               a(href=`/posts/${post.id}`) 
                 p.index-post__author
                   span.mr-2= post.createdAt.toLocaleDateString()
-                  span 정지원
+                  if (post.author && post.author.name)
+                    span= post.author.name
+                  else 
+                    span anonymous
                 h2.index-post__title= post.title
                 p.index-post__description= post.description 
       .col-2
