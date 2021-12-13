@@ -1,4 +1,4 @@
-// 로그인 여부 확인
+// 로그인 전연 변수 설정
 const loggedInMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.user = req.session.user;

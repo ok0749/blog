@@ -1,0 +1,45 @@
+form.post-commentForm.mb-4(action=`/comments/${post.id}`, method="post") 
+    .d-flex.align-items-center.mb-2 
+        if (!loggedIn)
+            img.avatar.mr-2(src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg")
+            textarea.post-commentForm__content(placeholder="로그인해야 댓글 달기 가능" name="content")
+        else    
+            img.avatar.mr-2(src=`${post.author.avatar}`)
+            textarea.post-commentForm__content(placeholder="댓글 달기" name="content" required)
+    .submit.d-flex.justify-content-end
+        if(!loggedIn)
+            button.btn.btn-primary(type='submit' disabled) Save
+        else
+            button.btn.btn-primary(type='submit') Save
+
+.d-flex.align-items-start.mb-2 
+    img.avatar.mr-2(src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg")
+    div
+        div 이청규
+        p.mb-2 '보안 편향적 사고의 주의점' 주호님. 유연한 사고를 가지셨군요 ^.^
+            |S3를 안전하게 사용하려면. S3 외에 알아야 할게 엄청나게 많네요. ^^;
+            | 0x02-1~4 난이도가 올라가는 느낌의 구성이라 지루하지 않게 쭈욱 잘 있었습니다.
+            | 감사합니다!)
+        .d-grid
+                a(href="") 좋아요 
+                span  · 
+                a(href="") 답글 달기
+                span  · 
+                span.mr-1 😄 
+                span 2
+
+each comment in comments 
+    .d-flex.align-items-start.mb-2 
+        img.avatar.mr-2(src= comment.author.avatar)
+        div
+            div= comment.author.name
+            p.mb-2= comment.content
+            .d-grid
+                    a(href="") 좋아요 
+                    span  · 
+                    a(href="") 답글 달기
+                    span  · 
+                    span.mr-1 😄 
+                    span= comment.goodCnt
+                    span  · 
+                    span= comment.createdAt.toLocaleDateString()

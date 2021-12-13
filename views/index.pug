@@ -19,7 +19,8 @@ block content
                 p.index-post__author
                   span.mr-2= post.createdAt.toLocaleDateString()
                   if (post.author && post.author.name)
-                    span= post.author.name
+                    span.mr-2= post.author.name
+                    img.avatar(src= post.author.avatar)
                   else 
                     span 익명
                 h1.mb-3.index-post__title= post.title

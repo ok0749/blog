@@ -84,7 +84,7 @@ a:hover {
   font-weight: 900;
 }
 
-.header-info__avatar {
+.avatar {
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 50%;
@@ -134,7 +134,8 @@ a:hover {
 
 /* post */
 .post-title,
-.post-info {
+.post-info,
+.post-markdown {
   border-bottom: 2px solid #eeeeee;
   padding-bottom: 1rem;
 }
@@ -144,3 +145,11 @@ a:hover {
   padding-left: 1rem;
   padding-right: 1rem;
 } */
+
+/* comment */
+.post-commentForm {
+  margin-top: 3rem;
+}
+.post-commentForm__content {
+  width: 100%;
+}

@@ -18,13 +18,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  avatar: String,
+  avatar: {
+    type: String,
+    default:
+      "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg",
+  },
 });
 
 userSchema.pre("save", async function (next) {
-  if (!this.avatar)
-    this.avatar =
-      "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg";
+  // if (!this.avatar)
+  //   this.avatar =
+  //     "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg";
   this.password = await bcrypt.hash(this.password, bcryptSaultRounds);
   next();
 });

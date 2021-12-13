@@ -1,9 +1,10 @@
 const Post = require("../models/posts");
+const Comment = require("../models/comments");
 
 function savePostAndRedirect(path) {
   return async (req, res) => {
     let post;
-    if (req.params.id !== "undefined") {
+    if (req.params.id !== undefined) {
       post = await Post.findById(req.params.id);
     } else {
       post = new Post();
@@ -31,8 +32,12 @@ module.exports = {
 
   postPage: async function (req, res) {
     const id = req.params.id;
-    const post = await Post.findById(id).populate("author", "name");
-    res.render("post", { post });
+    const post = await Post.findById(id).populate("author", ["name", "avatar"]);
+    const comments = await Comment.find({ post: id }).populate("author", [
+      "name",
+      "avatar",
+    ]);
+    res.render("post", { post, comments });
   },
 
   editPost: async function (req, res) {
