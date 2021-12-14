@@ -33,10 +33,9 @@ module.exports = {
   postPage: async function (req, res) {
     const id = req.params.id;
     const post = await Post.findById(id).populate("author", ["name", "avatar"]);
-    const comments = await Comment.find({ post: id }).populate("author", [
-      "name",
-      "avatar",
-    ]);
+    const comments = await Comment.find({ post: id })
+      .populate("author", ["name", "avatar"])
+      .sort({ createdAt: "desc" });
     res.render("post", { post, comments });
   },
 
@@ -52,7 +51,7 @@ module.exports = {
   deletePost: async function (req, res) {
     const post = await Post.findById(req.params.id).populate("author");
     if (req.session.user.id === post.author.id) {
-      await Post.findByIdAndDelete(req.params.id);
+      await post.deleteOne();
       return res.redirect("/");
     }
     res.render("post", { post });

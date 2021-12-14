@@ -12,7 +12,7 @@ block content
             .col-10
                 //- post
                 .mb-2
-                    if (user && post.author && user.id === post.author.id)
+                    if (user && user.id === post.author.id)
                         a.mr-3(href=`/posts/edit/${post.id}`) Edit
                         form.post-delete.d-inline(action=`/posts/${post.id}?_method=DELETE`, method="post") 
                             a.post-delete__anchor(href='') Delete
@@ -31,5 +31,8 @@ block content
                 include comment.pug
                 
             .col-1
-    script(src="/javascripts/post.js") 
+    if (user && user.id === post.author.id)
+        script(src="/javascripts/posts.js") 
+    script(src="/javascripts/comments.js") 
+
 

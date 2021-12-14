@@ -52,6 +52,11 @@ blockquote {
 /*  */
 
 /* global */
+.hidden,
+.hidden * {
+  display: none;
+}
+
 body {
   padding: 30px;
 }
@@ -147,9 +152,22 @@ a:hover {
 } */
 
 /* comment */
-.post-commentForm {
-  margin-top: 3rem;
+.post-comment {
+  width: 100%;
 }
+
+.post-commentForm {
+  margin-top: 2rem;
+}
+
 .post-commentForm__content {
   width: 100%;
+}
+
+.post-comment__buttons {
+  font-size: 0.8rem;
+}
+
+.liked {
+  background-color: red;
 }
