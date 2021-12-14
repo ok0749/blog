@@ -41,10 +41,11 @@ each comment in comments
             //- 좋아요, 답글 달기 등 버튼
             .d-grid.post-comment__buttons
                 form.d-inline.post-comment__buttons__form(action=`/comments/like/${comment.id}`, method="post")
-                    if (loggedIn && comment.like.includes(user.id))
-                        a.post-comment__buttons__anchor.liked(href="") 좋아요 
-                    else 
-                        a.post-comment__buttons__anchor(href="") 좋아요 
+                    a.post-comment__buttons__anchor(href="") 
+                        if (loggedIn && comment.like.includes(user.id))
+                            i.fas.fa-thumbs-up
+                        else 
+                            i.far.fa-thumbs-up
                 span  · 
                 a(href="") 답글 달기
                 span  · 

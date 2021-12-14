@@ -7,10 +7,16 @@ const editAnchors = document.querySelectorAll(".post-comment__editAnchor");
 
 likeForms.forEach(function (likeForm) {
   const likeAnchor = likeForm.querySelector(".post-comment__buttons__anchor");
+  const icon = likeForm.querySelector(".post-comment__buttons__anchor > i");
   likeAnchor.addEventListener("click", function (event) {
     event.preventDefault();
-    if (this.classList.contains("liked")) this.classList.remove("liked");
-    else this.classList.add("liked");
+    if (icon.classList.contains("fas")) {
+      icon.classList.remove("fas");
+      icon.classList.add("far");
+    } else {
+      icon.classList.remove("far");
+      icon.classList.add("fas");
+    }
     likeForm.submit();
     return false;
   });
