@@ -11,27 +11,45 @@ async function like(req, res) {
   //있으면 제거 없으면 추가
   if (isLike) await comment.updateOne({ $pull: { like: req.session.user.id } });
   else await comment.updateOne({ $push: { like: req.session.user.id } });
-  res.redirect(`/posts/${comment.post}`);
+  comment = await Comment.findById(req.params.id);
+  res.json({ like: comment.like.length });
+  //   res.redirect(`/posts/${comment.post}`);
 }
 
 // 댓글 저장
 async function saveComment(req, res) {
-  let post = await Post.findById(req.params.id);
-  let comment = new Comment();
+  const post = await Post.findById(req.params.id);
+  let comment = new Comment({
+    post: req.params.id,
+    content: req.body.content.trim(),
+    author: req.session.user.id,
+  });
 
-  post.comments.push(comment.id);
-
-  comment.post = req.params.id;
-  comment.content = req.body.content.trim();
-  comment.author = req.session.user.id;
   try {
-    post = await post.save();
-    comment = await comment.save();
+    await comment.save();
+    post.updateOne({ $push: { comments: comment.id } });
+    comment = await Comment.findById(comment.id).populate("author", [
+      "avatar",
+      "name",
+    ]);
+    // res.redirect(`/posts/${post.id}`);
+    return res.json({ comment });
   } catch (error) {
     console.error(error);
-  } finally {
-    res.redirect(`/posts/${post.id}`);
   }
+
+  //   comment.post = req.params.id;
+  //   comment.content = req.body.content.trim();
+  //   comment.author = req.session.user.id;
+  //   try {
+  //     post = await post.save();
+  //     comment = await comment.save();
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+
+  // res.redirect(`/posts/${post.id}`);
+  //   }
 }
 
 // 댓글 삭제
@@ -43,7 +61,8 @@ async function deleteComment(req, res) {
 
   if (req.session.user.id === comment.author.id) {
     await comment.deleteOne();
-    return res.redirect(`/posts/${comment.post}`);
+    return res.json({ comment });
+    // return res.redirect(`/posts/${comment.post}`);
   }
   res.send("delete");
 }
@@ -51,9 +70,14 @@ async function deleteComment(req, res) {
 // 댓글 수정
 async function saveEditComment(req, res) {
   let comment = await Comment.findById(req.params.id);
+  comment.content = req.body.editContent;
   try {
-    await comment.updateOne({ $set: { content: req.body.editContent } });
-    return res.redirect(`/posts/${comment.post}`);
+    comment = await comment.save();
+    // await comment.updateOne({
+    //   $set: { content: req.body.editContent },
+    // });
+    res.json({ comment });
+    // return res.redirect(`/posts/${comment.post}`);
   } catch (error) {
     console.error(error);
   }

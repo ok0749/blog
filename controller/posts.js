@@ -40,7 +40,10 @@ module.exports = {
   },
 
   editPost: async function (req, res) {
-    const post = await Post.findById(req.params.id).populate("author");
+    const post = await Post.findById(req.params.id).populate("author", [
+      "name",
+      "avatar",
+    ]);
     if (req.session.user.id === post.author.id)
       return res.render("edit", { post });
     res.render("post", { post });
@@ -49,7 +52,10 @@ module.exports = {
   saveEditPost: savePostAndRedirect("edit"),
 
   deletePost: async function (req, res) {
-    const post = await Post.findById(req.params.id).populate("author");
+    const post = await Post.findById(req.params.id).populate("author", [
+      "name",
+      "avatar",
+    ]);
     if (req.session.user.id === post.author.id) {
       await post.deleteOne();
       return res.redirect("/");

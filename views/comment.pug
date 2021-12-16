@@ -1,11 +1,11 @@
-form.post-commentForm.mb-4(action=`/comments/${post.id}`, method="post") 
+form.comment-createForm.mb-4(action=`/comments/${post.id}`, method="post") 
     .d-flex.align-items-center.mb-2 
         if (!loggedIn)
             img.avatar.mr-2(src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg")
-            textarea.post-commentForm__content(placeholder="로그인해야 댓글 달기 가능" name="content")
+            textarea.comment-createForm__content(placeholder="로그인해야 댓글 달기 가능" name="content")
         else    
             img.avatar.mr-2(src=`${post.author.avatar}`)
-            textarea.post-commentForm__content(placeholder="댓글 달기" name="content" required)
+            textarea.comment-createForm__content(placeholder="댓글 달기" name="content" required)
     .submit.d-flex.justify-content-end
         if(!loggedIn)
             button.btn.btn-primary(type='submit' disabled) Save
@@ -13,43 +13,46 @@ form.post-commentForm.mb-4(action=`/comments/${post.id}`, method="post")
             button.btn.btn-primary(type='submit') Save
 
 //- comments
-each comment in comments 
-    .d-flex.align-items-start.mb-2
-        img.avatar.mr-2(src= comment.author.avatar)
+ul.commentsBox
+    each comment in comments 
+        li.commentBox.d-flex.align-items-start.mb-2
+            img.avatar.mr-2(src= comment.author.avatar)
 
-        .post-comment
-            //- comment 읽기
-            div= comment.author.name
-            .post-comment__main
-                p.post-comment__content.mb-2= comment.content
+            .comment
+                //- comment 읽기
+                div= comment.author.name
+                .comment__main
+                    p.mb-2= comment.content
 
-                //- edit, delete 버튼
-                if (loggedIn && user.id === comment.author.id)
-                    .d-flex.justify-content-start.align-items-center
-                        a.btn.btn-outline-success.btn-sm.post-comment__editAnchor(href="") edit
-                        form.post-comment__deleteForm.d-inline(action=`/comments/${comment.id}?_method=DELETE`, method='post') 
-                            a.btn.btn-outline-success.btn-sm(href="") delete
+                    //- edit, delete 버튼
+                    if (loggedIn && user.id === comment.author.id)
+                        .d-flex.justify-content-start.align-items-center
+                            a.btn.btn-outline-success.btn-sm.comment__main__editAnchor(href="") edit
+                            form.comment__main__deleteForm.d-inline(action=`/comments/${comment.id}?_method=DELETE`, method='post') 
+                                //- a.btn.btn-outline-success.btn-sm(href="") delete
+                                button.btn.btn-outline-success.btn-sm(href="") delete
 
-            //- comment 수정
-            form.post-comment__editForm.hidden(action=`/comments/${comment.id}?_method=PUT`, method="post") 
-                .form-group
-                    textarea.form-control.post-comment__edit(name="editContent")= comment.content
-                .form-group.d-flex.justify-content-end
-                    a.btn.btn-dark.btn-sm.mr-1.post-comment__cancleAnchor cancle 
-                    button.btn.btn-success.btn-sm save
-    
-            //- 좋아요, 답글 달기 등 버튼
-            .d-grid.post-comment__buttons
-                form.d-inline.post-comment__buttons__form(action=`/comments/like/${comment.id}`, method="post")
-                    a.post-comment__buttons__anchor(href="") 
-                        if (loggedIn && comment.like.includes(user.id))
-                            i.fas.fa-thumbs-up
-                        else 
-                            i.far.fa-thumbs-up
-                span  · 
-                a(href="") 답글 달기
-                span  · 
-                span.mr-1.post-comment__buttons__emoji 😄 
-                span= comment.like.length
-                span  · 
-                span= comment.createdAt.toLocaleDateString()
+
+                //- comment 수정
+                form.comment__editForm.hidden(action=`/comments/${comment.id}?_method=PUT`, method="post") 
+                    .form-group
+                        textarea.form-control.comment__editForm__editBtn(name="editContent")= comment.content
+                    .form-group.d-flex.justify-content-end
+                        a.btn.btn-dark.btn-sm.mr-1.comment__editForm__cancleAnchor cancle 
+                        button.btn.btn-success.btn-sm save
+        
+                //- 좋아요, 답글 달기 등 버튼
+                .d-grid.comment__infos
+                    form.d-inline.comment__infos__form(action=`/comments/like/${comment.id}`, method="post")
+                        a.comment__infos__likeAnchor(href="") 
+                            if (loggedIn && comment.like.includes(user.id))
+                                i.fas.fa-thumbs-up
+                            else 
+                                i.far.fa-thumbs-up
+                    span  · 
+                    a(href="") 답글 달기
+                    span  · 
+                    span.mr-1.comment__infos__emoji 😄 
+                    span.comment__infos__likeNum= comment.like.length
+                    span  · 
+                    span= comment.createdAt.toLocaleDateString()

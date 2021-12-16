@@ -75,6 +75,11 @@ a:hover {
   text-decoration: none;
 }
 
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 /* header */
 .header {
   display: flex;
@@ -152,18 +157,18 @@ a:hover {
 } */
 
 /* comment */
-.post-comment {
+.comment {
   width: 100%;
 }
 
-.post-commentForm {
+.comment-createdForm {
   margin-top: 2rem;
 }
 
-.post-commentForm__content {
+.comment-createForm__content {
   width: 100%;
 }
 
-.post-comment__buttons {
+.comment__infos {
   font-size: 0.8rem;
 }
