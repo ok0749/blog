@@ -5,7 +5,24 @@ block content
         .row 
             .col-1
             .col-10
-                form.new-form(action=`/posts/${post.id}?_method=PUT`, method="post") 
+                form.new-form(action=`/posts/${method}`, method="post") 
+                    .form-group.tag-group
+                        label(for='tags') Tag
+                        select#tags.tag-group__select.form-control(name="tag") 
+                            each tag in tags
+                                if tag.name === post.tag
+                                    option(value=tag.name selected=true)= tag.name 
+                                else if tag.name == "없음"
+                                    option(value=tag.name selected=true)= tag.name 
+                                else
+                                    option(value=tag.name)= tag.name
+                                
+                        input.tag-group__input.hidden.form-control(placeholder="추가할 Tag를 입력하세요." type="text")
+                        a.tag-group__anchor.btn.btn-success new Tag
+                        .hidden.tag-group__add 
+                            a.tag-group__add__cancleBtn.btn.btn-secondary Cancle 
+                            a.tag-group__add__addBtn.btn.btn-success(href=`/tags/${post.id}`) Add
+                        
                     .form-group 
                         label(for="title") Title 
                         input#title.form-control(required type="text" name='title' value= post.title) 

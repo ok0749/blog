@@ -1,8 +1,32 @@
 let commentBoxes = document.querySelectorAll(".commentBox");
-// const likeForms = document.querySelectorAll(".comment__infos__form");
-// const deleteForms = document.querySelectorAll(".comment__main__deleteForm");
-// const editForms = document.querySelectorAll(".comment__editForm");
 
+// 새로운 댓글 저장
+async function handleCreateSubmit(event, createForm) {
+  event.preventDefault();
+  await fetch(createForm.action, {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      content: createForm.content.value,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      commentsBox.insertAdjacentHTML(
+        "afterbegin",
+        createCommentBox(data.comment)
+      );
+      createForm.content.value = "";
+    });
+
+  commentBoxes = document.querySelectorAll(".commentBox");
+  handleCommentBox(commentBoxes);
+}
+
+// 좋아요 클릭
 async function handleLikeClick(event, likeForm, likeNum, icon) {
   event.preventDefault();
   await fetch(likeForm.action, {
@@ -25,6 +49,7 @@ async function handleLikeClick(event, likeForm, likeNum, icon) {
     });
 }
 
+// edit 버튼 클릭
 async function handleEditClick(event, editForm, commentMain) {
   event.preventDefault();
   editForm.classList.remove("hidden");
@@ -32,6 +57,7 @@ async function handleEditClick(event, editForm, commentMain) {
   return false;
 }
 
+// 댓글 수정 후 저장
 async function handleEditSubmit(event, editForm, commentMain, cancleAnchor) {
   event.preventDefault();
   await fetch(editForm.action, {
@@ -51,6 +77,7 @@ async function handleEditSubmit(event, editForm, commentMain, cancleAnchor) {
     });
 }
 
+// 댓글 삭제
 async function handleDeleteClick(event, deleteForm, commentBox) {
   event.preventDefault();
   await fetch(deleteForm.action, {
@@ -64,6 +91,7 @@ async function handleDeleteClick(event, deleteForm, commentBox) {
     .catch(console.error);
 }
 
+// cancle 버튼 클릭
 async function handleCancleClick(event, editForm, commentMain) {
   event.preventDefault();
   editForm.classList.add("hidden");
@@ -71,6 +99,7 @@ async function handleCancleClick(event, editForm, commentMain) {
   return false;
 }
 
+// 새로운 댓글 저장시 댓글 UI 생성
 function createCommentBox(comment) {
   return `
   <li class="d-flex align-items-start mb-2 commentBox">
@@ -121,118 +150,54 @@ function createCommentBox(comment) {
 }
 
 // 전체
-commentBoxes.forEach(async function (commentBox) {
-  const editAnchor = commentBox.querySelector(".comment__main__editAnchor");
-  const editForm = commentBox.querySelector(".comment__editForm");
-  const deleteForm = commentBox.querySelector(".comment__main__deleteForm");
-  const likeForm = commentBox.querySelector(".comment__infos__form");
-  const likeAnchor = commentBox.querySelector(".comment__infos__likeAnchor");
-  const likeNum = commentBox.querySelector(".comment__infos__likeNum");
-  const icon = likeAnchor.querySelector("i");
-  const cancleAnchor = commentBox.querySelector(
-    ".comment__editForm__cancleAnchor"
-  );
-  const commentMain = commentBox.querySelector(".comment__main");
+function handleCommentBox(commentBoxes) {
+  commentBoxes.forEach(async function (commentBox) {
+    const editAnchor = commentBox.querySelector(".comment__main__editAnchor");
+    const editForm = commentBox.querySelector(".comment__editForm");
+    const deleteForm = commentBox.querySelector(".comment__main__deleteForm");
+    const likeForm = commentBox.querySelector(".comment__infos__form");
+    const likeAnchor = commentBox.querySelector(".comment__infos__likeAnchor");
+    const likeNum = commentBox.querySelector(".comment__infos__likeNum");
+    const icon = likeAnchor.querySelector("i");
+    const cancleAnchor = commentBox.querySelector(
+      ".comment__editForm__cancleAnchor"
+    );
+    const commentMain = commentBox.querySelector(".comment__main");
 
-  // cancle 버튼 클릭시
-  if (editAnchor) {
-    editAnchor.addEventListener("click", async function (event) {
-      await handleEditClick(event, editForm, commentMain);
+    // cancle 버튼 클릭시
+    if (editAnchor) {
+      editAnchor.addEventListener("click", async function (event) {
+        await handleEditClick(event, editForm, commentMain);
+      });
+    }
+
+    cancleAnchor.addEventListener("click", async function (event) {
+      await handleCancleClick(event, editForm, commentMain);
     });
-  }
 
-  cancleAnchor.addEventListener("click", async function (event) {
-    await handleCancleClick(event, editForm, commentMain);
+    // 댓글 save 버튼 클릭시
+    editForm.addEventListener("submit", function (event) {
+      handleEditSubmit(event, editForm, commentMain, cancleAnchor);
+    });
+
+    // 댓글 delete 버튼 클릭시
+    deleteForm.addEventListener("submit", async function (event) {
+      await handleDeleteClick(event, deleteForm, commentBox);
+    });
+
+    // 좋아요 클릭시
+    likeAnchor.addEventListener("click", async function handleLike(event) {
+      await handleLikeClick(event, likeForm, likeNum, icon);
+    });
   });
+}
 
-  // 댓글 save 버튼 클릭시
-  editForm.addEventListener("submit", function (event) {
-    handleEditSubmit(event, editForm, commentMain, cancleAnchor);
-  });
+handleCommentBox(commentBoxes);
 
-  // 댓글 delete 버튼 클릭시
-  deleteForm.addEventListener("submit", async function (event) {
-    await handleDeleteClick(event, deleteForm, commentBox);
-  });
-
-  // 좋아요 클릭시
-  likeAnchor.addEventListener("click", async function (event) {
-    await handleLikeClick(event, likeForm, likeNum, icon);
-  });
-});
-
-// ################################################################
-// 새로 생성시 동작
-// ################################################################
-
-// save 클릭시 저장 및 html 새로 생성
 const createForms = document.querySelectorAll(".comment-createForm");
 let commentsBox = document.querySelector(".commentsBox");
 createForms.forEach(function (createForm) {
   createForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    await fetch(createForm.action, {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        content: createForm.content.value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        commentsBox.insertAdjacentHTML(
-          "afterbegin",
-          createCommentBox(data.comment)
-        );
-        createForm.content.value = "";
-      });
-
-    // ###########################################################################
-    commentBoxes = document.querySelectorAll(".commentBox");
-    commentBoxes.forEach(async function (commentBox) {
-      const editAnchor = commentBox.querySelector(".comment__main__editAnchor");
-      const editForm = commentBox.querySelector(".comment__editForm");
-      const deleteForm = commentBox.querySelector(".comment__main__deleteForm");
-      const likeForm = commentBox.querySelector(".comment__infos__form");
-      const likeAnchor = commentBox.querySelector(
-        ".comment__infos__likeAnchor"
-      );
-      const likeNum = commentBox.querySelector(".comment__infos__likeNum");
-      const icon = likeAnchor.querySelector("i");
-      const cancleAnchor = commentBox.querySelector(
-        ".comment__editForm__cancleAnchor"
-      );
-      const commentMain = commentBox.querySelector(".comment__main");
-
-      // cancle 버튼 클릭시
-      if (editAnchor) {
-        editAnchor.addEventListener("click", async function (event) {
-          await handleEditClick(event, editForm, commentMain);
-        });
-      }
-
-      cancleAnchor.addEventListener("click", async function (event) {
-        await handleCancleClick(event, editForm, commentMain);
-      });
-
-      // 댓글 save 버튼 클릭시
-      editForm.addEventListener("submit", async function (event) {
-        await handleEditSubmit(event, editForm, commentMain, cancleAnchor);
-      });
-
-      // 댓글 delete 버튼 클릭시
-      deleteForm.addEventListener("submit", async function (event) {
-        await handleDeleteClick(event, deleteForm, commentBox);
-      });
-
-      // 좋아요 클릭시
-      likeAnchor.addEventListener("click", async function (event) {
-        await handleLikeClick(event, likeForm, likeNum, icon);
-      });
-    });
-    // ###########################################################################
+    handleCreateSubmit(event, createForm);
   });
 });

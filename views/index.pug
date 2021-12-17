@@ -20,7 +20,7 @@ block content
                 h6.index-post__description= post.description 
       .col-2
         ul.index-tags.text-info Tag
-          li.index-tag.text-dark 우아한테크코스 (17)
-          li.index-tag.text-dark 우아한테크캠프 (15)
-          li.index-tag.text-dark onboarding (11)
+          each tag in tags 
+            li.index-tag.text-dark 
+              a(href=`/${tag.id}`) #{tag.name} (#{tag.posts.length})
       .col-1

@@ -1,9 +1,4 @@
 const mongoose = require("mongoose");
-// const { marked } = require("marked");
-// const createDomPurifier = require("dompurify");
-// const { JSDOM } = require("jsdom");
-
-// const dompurify = createDomPurifier(new JSDOM().window);
 
 const commentSchema = new mongoose.Schema({
   post: {
@@ -28,6 +23,7 @@ const commentSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      unique: true,
     },
   ],
 });

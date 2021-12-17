@@ -23,12 +23,21 @@ const userSchema = new mongoose.Schema({
     default:
       "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg",
   },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
 
 userSchema.pre("save", async function (next) {
-  // if (!this.avatar)
-  //   this.avatar =
-  //     "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg";
   this.password = await bcrypt.hash(this.password, bcryptSaultRounds);
   next();
 });

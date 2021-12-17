@@ -37,6 +37,7 @@ const postSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+  tag: String,
 });
 
 postSchema.pre("validate", function (next) {

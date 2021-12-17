@@ -12,8 +12,8 @@ router.get("/new", authorizationMiddleware, postController.newPage);
 // 각 글 페이지
 router.get("/:id", postController.postPage);
 
-// 글 수정
-router.get("/edit/:id", authorizationMiddleware, postController.editPost);
+// 각 글 수정 페이지
+router.get("/edit/:id", authorizationMiddleware, postController.editPage);
 
 // 새 글 저장
 router.post("/", authorizationMiddleware, postController.savePost);

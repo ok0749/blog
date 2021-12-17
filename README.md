@@ -4,9 +4,9 @@
 - [x] 글쓴이와 로그인한 유저가 동일해야 삭제할 수 있도록 구현
 - [x] post user collection 연결 index.pug 수정
 - [x] user에 post, comment 연결
-- [ ] fetch로 comment 기능 구현
-- [ ] tag Schema
-- [ ] tag 화면
+- [x] fetch로 comment 기능 구현
+- [x] tag Schema
+- [x] tag 화면
 - [ ] comment Schema tag, user와 연결
 - [x] comment router, controller
 - [x] comment view
