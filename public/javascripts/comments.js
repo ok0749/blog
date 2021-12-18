@@ -22,7 +22,7 @@ async function handleCreateSubmit(event, createForm) {
       createForm.content.value = "";
     });
 
-  commentBoxes = document.querySelectorAll(".commentBox");
+  commentBoxes = [document.querySelector(".commentBox")];
   handleCommentBox(commentBoxes);
 }
 
@@ -186,7 +186,8 @@ function handleCommentBox(commentBoxes) {
     });
 
     // 좋아요 클릭시
-    likeAnchor.addEventListener("click", async function handleLike(event) {
+
+    likeAnchor.addEventListener("click", async function (event) {
       await handleLikeClick(event, likeForm, likeNum, icon);
     });
   });
