@@ -7,7 +7,7 @@ const loggedInMiddleware = (req, res, next) => {
 
 // 권한 확인
 const authorizationMiddleware = (req, res, next) => {
-  if (req.session.loggedIn) return next();
+  if (req.session.user.id === "master") return next();
   res.redirect("/");
 };
 

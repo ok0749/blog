@@ -9,12 +9,17 @@ var debug = require("debug")("app:server");
 var http = require("http");
 const connectDB = require("../db/database");
 const config = require("../config");
+const Tag = require("../models/tags");
+const User = require("../models/users");
 
 /**
  * Get port from environment and store in Express.
  */
 
 const port = config.port;
+const masterId = config.master.id;
+const masterPassword = config.master.password;
+
 app.set("port", port);
 
 /**
@@ -70,7 +75,20 @@ function onListening() {
    * connect db
    */
   connectDB()
-    .then(() => {
+    .then(async () => {
+      if ((await Tag.countDocuments()) <= 0) {
+        await Tag.create({ name: "전체보기" });
+        console.log("전체보기 created");
+      }
+
+      if ((await User.countDocuments()) <= 0) {
+        await User.create({
+          userId: masterId,
+          password: masterPassword,
+          name: "master",
+        });
+        console.log("master user created");
+      }
       console.log("DB connected");
     })
     .catch(console.error);

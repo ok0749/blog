@@ -32,6 +32,7 @@ module.exports = {
       req.session.loggedIn = true;
       req.session.user = {
         id: user.id,
+        userId: user.userId,
         name: user.name,
         avatar: user.avatar,
       };
@@ -54,6 +55,7 @@ module.exports = {
     req.session.loggedIn = true;
     req.session.user = {
       id: user.id,
+      userId: user.userId,
       name: user.name,
       avatar: user.avatar,
     };

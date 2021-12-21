@@ -19,6 +19,10 @@ const config = {
     secret: required("SESSION_SECRET"),
     maxAge: parseInt(required("SESSION_MAXAGE")),
   },
+  master: {
+    id: required("MASTER_ID", "master"),
+    password: required("MASTER_PASSWORD", "1234"),
+  },
 };
 
 module.exports = config;
