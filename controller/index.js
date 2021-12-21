@@ -2,12 +2,17 @@ const Post = require("../models/posts");
 const Tag = require("../models/tags");
 
 async function getAllPost(req, res) {
-  const posts = await Post.find()
-    .sort({ createdAt: "desc" })
-    .populate("author", ["name", "avatar"]);
+  const posts = res.pagination.results;
+  const previous = res.pagination.previous;
+  const next = res.pagination.next;
+  const pages = res.pagination.pages;
+  const current = res.pagination.current;
+  // const posts = await Post.find()
+  //   .sort({ createdAt: "desc" })
+  //   .populate("author", ["name", "avatar"]);
 
   const tags = await Tag.find().sort({ name: "asc" });
-  res.render("index", { posts, tags });
+  res.render("index", { posts, tags, previous, next, current, pages });
 }
 
 async function getTagPost(req, res) {

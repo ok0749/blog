@@ -18,9 +18,35 @@ block content
                     span 익명
                 h1.mb-3.index-post__title= post.title
                 h6.index-post__description= post.description 
+        
+        //- pagination
+        .index-pagination.d-flex.justify-content-center
+          if (previous)
+            a.btn.btn-light(href=`/?page=${previous.page}`) 
+              span <
+          else 
+            a.btn.btn-light.disabled
+              span <
+          
+          - for (let i=1; i<pages+1; i++)
+            if (current !== i)
+              a.btn.btn-light(href=`/?page=${i}`)
+                span= i
+            else 
+              a.btn.btn-primary.active(href=`/?page=${i}`)
+                span= i
+
+          if (next)
+            a.btn.btn-light(href=`/?page=${next.page}`) 
+              span >
+          else 
+            a.btn.btn-light.disabled
+              span >
       .col-2
         ul.index-tags.text-info Tag
           each tag in tags 
             li.index-tag.text-dark 
-              a(href=`/${tag.id}`) #{tag.name} (#{tag.posts.length})
+              a(href=`/tags/${tag.id}`) #{tag.name} (#{tag.posts.length})
+
+        
       .col-1

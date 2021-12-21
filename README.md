@@ -7,12 +7,13 @@
 - [x] fetch로 comment 기능 구현
 - [x] tag Schema
 - [x] tag 화면
-- [ ] comment Schema tag, user와 연결
+- [x] comment Schema tag, user와 연결
 - [x] comment router, controller
 - [x] comment view
 - [x] 로그인 한 사람만 comment 쓸 수 있도록
 - [ ] 대댓글 추가
 - [ ] 권한있는 유저만 글 쓸 수 있도록
+- [ ] markdown에 이미지 추가할 수 있도록
 - [ ] index pagination
 - [ ] 에러 처리 점검 
 - [ ] 코드 리팩토링
