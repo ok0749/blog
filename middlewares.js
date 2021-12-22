@@ -1,3 +1,7 @@
+const config = require("./config");
+
+const masterId = config.master.id;
+
 // 로그인 전연 변수 설정
 const loggedInMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -7,7 +11,7 @@ const loggedInMiddleware = (req, res, next) => {
 
 // 권한 확인
 const authorizationMiddleware = (req, res, next) => {
-  if (req.session.user.id === "master") return next();
+  if (req.session.user.id === masterId) return next();
   res.redirect("/");
 };
 

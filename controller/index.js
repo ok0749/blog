@@ -1,5 +1,6 @@
 const Post = require("../models/posts");
 const Tag = require("../models/tags");
+const config = require("../config");
 
 async function getAllPost(req, res) {
   const posts = res.pagination.results;
@@ -7,12 +8,18 @@ async function getAllPost(req, res) {
   const next = res.pagination.next;
   const pages = res.pagination.pages;
   const current = res.pagination.current;
-  // const posts = await Post.find()
-  //   .sort({ createdAt: "desc" })
-  //   .populate("author", ["name", "avatar"]);
-
   const tags = await Tag.find().sort({ name: "asc" });
-  res.render("index", { posts, tags, previous, next, current, pages });
+  const masterId = config.master.id;
+
+  res.render("index", {
+    posts,
+    tags,
+    previous,
+    next,
+    current,
+    pages,
+    masterId,
+  });
 }
 
 async function getTagPost(req, res) {
