@@ -6,15 +6,31 @@ const commentController = require("../controller/comments");
 const router = express.Router();
 
 // 좋아요
-router.post("/like/:id", authorizationMiddleware, commentController.like);
+router.post(
+  "/like/:commentId",
+  authorizationMiddleware,
+  commentController.handleLike
+);
 
 // 댓글 저장
-router.post("/:id", authorizationMiddleware, commentController.saveComment);
+router.post(
+  "/:postId",
+  authorizationMiddleware,
+  commentController.createComment
+);
 
 // 댓글 삭제
-router.delete("/:id", authorizationMiddleware, commentController.deleteComment);
+router.delete(
+  "/:commentId",
+  authorizationMiddleware,
+  commentController.deleteComment
+);
 
 // 댓글 수정
-router.put("/:id", authorizationMiddleware, commentController.saveEditComment);
+router.put(
+  "/:commentId",
+  authorizationMiddleware,
+  commentController.updateComment
+);
 
 module.exports = router;

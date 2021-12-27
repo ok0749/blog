@@ -1,7 +1,6 @@
 header.header
     a(href="/") 
         h1.header-title  My blog  
-    -console.log(masterId)
     if !loggedIn
         a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/login') Login
     else if (user.userId !== masterId)

@@ -30,7 +30,7 @@ block content
                         label(for="description") Description 
                         textarea#description.form-control(required name="description") #{post.description}
                     .form-group 
-                        label(for="markdown") Markdown 
+                        label.d-block(for="markdown") Markdown 
                         textarea#markdown.form-control(required name="markdown" rows='20') #{post.markdown}
                     .new-form__buttons.d-flex.justify-content-end
                         a.btn.btn-secondary.mr-2(href=`/posts/${post.id}`) Cancel 

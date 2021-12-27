@@ -17,8 +17,8 @@ const User = require("../models/users");
  */
 
 const port = config.port;
-const masterId = config.master.id;
-const masterPassword = config.master.password;
+const adminId = config.admin.id;
+const adminPassword = config.admin.password;
 
 app.set("port", port);
 

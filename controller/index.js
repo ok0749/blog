@@ -22,8 +22,8 @@ async function getAllPost(req, res) {
   });
 }
 
-async function getTagPost(req, res) {
-  const tag = await Tag.findById(req.params.id);
+async function getAllPostByTag(req, res) {
+  const tag = await Tag.findById(req.params.tagId);
   const posts = await Post.find({ _id: { $in: tag.posts } })
     .sort({ createdAt: "desc" })
     .populate("author", ["name", "avatar"]);
@@ -33,5 +33,5 @@ async function getTagPost(req, res) {
 
 module.exports = {
   getAllPost,
-  getTagPost,
+  getAllPostByTag,
 };

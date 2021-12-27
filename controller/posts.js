@@ -3,21 +3,21 @@ const Post = require("../models/posts");
 const Comment = require("../models/comments");
 const Tag = require("../models/tags");
 
-function savePostAndRedirect() {
+function createPostAndRedirect() {
   return async (req, res) => {
-    let post;
-    if (req.params.id !== undefined) {
-      post = await Post.findById(req.params.id);
-    } else {
-      post = new Post();
-    }
-    const { tag, title, description, markdown } = req.body;
-    post.title = title;
-    post.description = description;
-    post.markdown = markdown;
-    post.author = req.session.user.id;
-    post.tag = tag;
     try {
+      let post;
+      if (req.params.id !== undefined) {
+        post = await Post.findById(req.params.id);
+      } else {
+        post = new Post();
+      }
+      const { tag, title, description, markdown } = req.body;
+      post.title = title;
+      post.description = description;
+      post.markdown = markdown;
+      post.author = req.session.user.id;
+      post.tag = tag;
       post = await post.save();
       await Tag.findOneAndUpdate(
         { posts: post.id },
@@ -28,36 +28,46 @@ function savePostAndRedirect() {
         $push: { posts: post.id },
       });
       res.redirect(`/posts/${post.id}`);
-    } catch (error) {
-      console.error(error);
-      res.render("edit", { post });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ message: e.message });
     }
   };
 }
 
-module.exports = {
-  // 새 글 작성 페이지
-  newPage: async function (req, res) {
-    res.locals.method = "";
+// 새 글 작성 페이지
+async function newPage(req, res) {
+  res.locals.method = "";
+  try {
     const tags = await Tag.find().sort();
     res.render("edit", { post: new Post(), tags });
-  },
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: e.message });
+  }
+}
 
-  // 새 글 저장
-  savePost: savePostAndRedirect(),
+// 새 글 저장
+const createPost = createPostAndRedirect();
 
-  // 각 글 페이지
-  postPage: async function (req, res) {
-    const id = req.params.id;
+// 각 글 페이지
+async function postPage(req, res) {
+  const id = req.params.id;
+  try {
     const post = await Post.findById(id).populate("author", ["name", "avatar"]);
     const comments = await Comment.find({ post: id })
       .populate("author", ["name", "avatar"])
       .sort({ createdAt: "desc" });
     res.render("post", { post, comments });
-  },
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: e.message });
+  }
+}
 
-  // 각 글 수정 페이지
-  editPage: async function (req, res) {
+// 각 글 수정 페이지
+async function editPage(req, res) {
+  try {
     const post = await Post.findById(req.params.id).populate("author", [
       "name",
       "avatar",
@@ -68,13 +78,18 @@ module.exports = {
       return res.render("edit", { post, tags });
     }
     res.render("post", { post, tags });
-  },
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: e.message });
+  }
+}
 
-  // 수정 글 저장
-  saveEditPost: savePostAndRedirect(),
+// 수정 글 저장
+const updatePost = createPostAndRedirect();
 
-  // 글 삭제
-  deletePost: async function (req, res) {
+// 글 삭제
+async function deletePost(req, res) {
+  try {
     const post = await Post.findById(req.params.id).populate("author", [
       "name",
       "avatar",
@@ -89,5 +104,17 @@ module.exports = {
       return res.redirect("/");
     }
     res.render("post", { post });
-  },
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: e.message });
+  }
+}
+
+module.exports = {
+  newPage,
+  createPost,
+  postPage,
+  editPage,
+  updatePost,
+  deletePost,
 };

@@ -19,9 +19,9 @@ const config = {
     secret: required("SESSION_SECRET"),
     maxAge: parseInt(required("SESSION_MAXAGE")),
   },
-  master: {
-    id: required("MASTER_ID", "master"),
-    password: required("MASTER_PASSWORD", "1234"),
+  admin: {
+    id: required("ADMIN_ID", "master"),
+    password: required("ADMIN_PASSWORD", "1234"),
   },
 };
 

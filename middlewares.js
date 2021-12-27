@@ -1,6 +1,7 @@
 const config = require("./config");
+require("express-async-errors");
 
-const masterId = config.master.id;
+const adminId = config.admin.id;
 
 // 로그인 전연 변수 설정
 const loggedInMiddleware = (req, res, next) => {
@@ -11,8 +12,8 @@ const loggedInMiddleware = (req, res, next) => {
 
 // 권한 확인
 const authorizationMiddleware = (req, res, next) => {
-  if (req.session.user.id === masterId) return next();
-  res.redirect("/");
+  if (req.session.user && req.session.user.userId === adminId) return next();
+  return res.status(403).json({ message: "권한이 없습니다." });
 };
 
 // pagination

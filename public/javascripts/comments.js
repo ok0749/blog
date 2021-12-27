@@ -87,7 +87,7 @@ async function handleDeleteClick(event, deleteForm, commentBox) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   })
-    .then((res) => commentBox.classList.add("hidden"))
+    .then(() => commentBox.remove())
     .catch(console.error);
 }
 

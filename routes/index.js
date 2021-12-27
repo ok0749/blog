@@ -1,12 +1,13 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
 const indexController = require("../controller/index");
-const pagination = require("../middlewares").pagination;
+const { pagination } = require("../middlewares");
 const Post = require("../models/posts");
+
+const router = express.Router();
 
 /* GET home page. */
 router.get("/", pagination(Post), indexController.getAllPost);
 
-router.get("/tags/:id", indexController.getTagPost);
+router.get("/:tagId", indexController.getAllPostByTag);
 
 module.exports = router;

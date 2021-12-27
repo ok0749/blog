@@ -1,10 +1,10 @@
-var express = require("express");
+const express = require("express");
+require("express-async-errors");
 const Post = require("../models/posts");
 const postController = require("../controller/posts");
-const authorizationMiddleware =
-  require("../middlewares").authorizationMiddleware;
+const { authorizationMiddleware } = require("../middlewares");
 
-var router = express.Router();
+const router = express.Router();
 
 // 새 글 쓰기
 router.get("/new", authorizationMiddleware, postController.newPage);
@@ -16,10 +16,10 @@ router.get("/:id", postController.postPage);
 router.get("/edit/:id", authorizationMiddleware, postController.editPage);
 
 // 새 글 저장
-router.post("/", authorizationMiddleware, postController.savePost);
+router.post("/", authorizationMiddleware, postController.createPost);
 
 // 수정된 글 저장
-router.put("/:id", authorizationMiddleware, postController.saveEditPost);
+router.put("/:id", authorizationMiddleware, postController.updatePost);
 
 // 글 삭제
 router.delete("/:id", authorizationMiddleware, postController.deletePost);
