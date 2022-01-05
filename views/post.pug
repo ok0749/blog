@@ -18,15 +18,16 @@ block content
                         form.post-delete.d-inline(action=`/posts/${post.id}?_method=DELETE`, method="post") 
                             a.post-delete__anchor(href='') Delete
                 .mb-3 Tag: #{post.tag}
+                span.mb-4.mr-2= post.createdAt.toLocaleDateString()
                 h1.post-title= post.title 
-                .post-info.mb-4
-                    span.mb-2.mr-2= post.createdAt.toLocaleDateString()
-                    if (post.author)
-                        span.mr-2= post.author.name
-                        img.avatar(src=`${post.author.avatar}`)
-                    else
-                        span.mr-2 익명
-                    h6.mt-2= post.description
+                //- .post-info.mb-4
+                //-     span.mb-2.mr-2= post.createdAt.toLocaleDateString()
+                //-     if (post.author)
+                //-         span.mr-2= post.author.name
+                //-         img.avatar(src=`${post.author.avatar}`)
+                //-     else
+                //-         span.mr-2 익명
+                //-     h6.mt-2= post.description
                 .post-markdown !{post.sanitizedHTML}
 
                 //- comment

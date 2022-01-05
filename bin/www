@@ -83,8 +83,8 @@ function onListening() {
 
       if ((await User.countDocuments()) <= 0) {
         await User.create({
-          userId: masterId,
-          password: masterPassword,
+          userId: adminId,
+          password: adminPassword,
           name: "master",
         });
         console.log("master user created");

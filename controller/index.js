@@ -9,7 +9,7 @@ async function getAllPost(req, res) {
   const pages = res.pagination.pages;
   const current = res.pagination.current;
   const tags = await Tag.find().sort({ name: "asc" });
-  const masterId = config.master.id;
+  const adminId = config.admin.id;
 
   res.render("index", {
     posts,
@@ -18,7 +18,7 @@ async function getAllPost(req, res) {
     next,
     current,
     pages,
-    masterId,
+    adminId,
   });
 }
 

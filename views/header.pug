@@ -3,7 +3,7 @@ header.header
         h1.header-title  My blog  
     if !loggedIn
         a.header__login.btn.btn-sm.btn-outline-secondary(href='/users/login') Login
-    else if (user.userId !== masterId)
+    else if (user.userId !== adminId)
         .header-info 
             span.mr-2= user.name + '님'
             img.avatar.mr-2(src= user.avatar)
