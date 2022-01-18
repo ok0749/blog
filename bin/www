@@ -77,8 +77,8 @@ function onListening() {
   connectDB()
     .then(async () => {
       if ((await Tag.countDocuments()) <= 0) {
-        await Tag.create({ name: "전체보기" });
-        console.log("전체보기 created");
+        await Tag.create({ name: "기타" });
+        console.log("기타 created");
       }
 
       if ((await User.countDocuments()) <= 0) {
