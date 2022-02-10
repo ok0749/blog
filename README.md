@@ -30,32 +30,3 @@ ADMIN_PASSWORD=1234
 npm i
 npm start
 ```
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-
-
-### Todo List
-- [x] post 삭제 구현
-- [x] 로그인 안한 사람 post 쓰기, 저장, 수정 불가
-- [x] 글쓴이와 로그인한 유저가 동일해야 삭제할 수 있도록 구현
-- [x] post user collection 연결 index.pug 수정
-- [x] user에 post, comment 연결
-- [x] fetch로 comment 기능 구현
-- [x] tag Schema
-- [x] tag 화면
-- [x] comment Schema tag, user와 연결
-- [x] comment router, controller
-- [x] comment view
-- [x] 로그인 한 사람만 comment 쓸 수 있도록
-- [ ] 대댓글 추가
-- [x] 권한있는 유저만 글 쓸 수 있도록
-- [ ] 이미지 업로드
-- [x] pagination
-- [ ] 에러 처리 점검 
-- [ ] 코드 리팩토링
