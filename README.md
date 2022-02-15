@@ -1,4 +1,5 @@
 # Express.js와 MongoDB로 만든 블로그
+http://ec2-44-201-168-32.compute-1.amazonaws.com:9000/
 
 ## 실행 방법
 1. .env 변수 설정
